@@ -6,7 +6,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY .env* ./
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 FROM node:18-alpine AS build
 
@@ -23,7 +23,7 @@ COPY . .
 
 RUN npm run build
 
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --legacy-peer-deps --only=production && npm cache clean --force
 
 FROM node:18-alpine AS production
 
