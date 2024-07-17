@@ -1,4 +1,4 @@
-FROM node:18 AS development
+FROM node:18-alpine AS development
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm ci
 
-FROM node:18 AS build
+FROM node:18-alpine AS build
 
 ENV NODE_ENV production
 ENV TZ="Asia/Jakarta"
@@ -25,7 +25,7 @@ RUN npm run build
 
 RUN npm ci --only=production && npm cache clean --force
 
-FROM node:18 AS production
+FROM node:18-alpine AS production
 
 ENV NODE_ENV production
 ENV TZ="Asia/Jakarta"

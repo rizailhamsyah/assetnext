@@ -17,7 +17,7 @@ interface FormData {
   password: string;
 }
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps, {csrfToken}:{csrfToken:any}) {
+export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [isLoginFail, setIsLoginFail] = useState(false)

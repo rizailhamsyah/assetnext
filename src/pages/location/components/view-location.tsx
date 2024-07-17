@@ -108,14 +108,14 @@ export function ViewLocation({ data, openDialogView, onClose }: { data: any, ope
             }
         },
     })
-
     const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files[0];
-        createFormik.setFieldValue("image", file);
-
-        if (file) {
+        const files = e.currentTarget.files;
+        if (files && files[0]) {
+            const file = files[0];
+            createFormik.setFieldValue("image", file);
             setImage(file);
         } else {
+            createFormik.setFieldValue("image", null);
             setImage(null);
         }
     };

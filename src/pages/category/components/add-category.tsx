@@ -31,6 +31,22 @@ import { useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useToast } from "@/components/ui/use-toast"
 
+interface dataCompilator{
+    id: number,
+    cc_kompilator: string,
+    kompilator: string
+}
+
+interface dataGolongan{
+    id: number,
+    golongan: string
+}
+
+interface dataAtribut{
+    id: number,
+    atribut: string
+}
+
 export function FormAddCategory() {
     const queryClient = useQueryClient();
     const { toast } = useToast()
@@ -42,9 +58,9 @@ export function FormAddCategory() {
     const [compilator, setCompilator] = React.useState<string>('');
     const [benefit, setBenefit] = React.useState<string>('');
     const [attributes, setAttributes] = React.useState([{ id: 1, value: '' }]);
-    const [dataCompilator, setDataCompilator] = React.useState([])
-    const [dataAttribut, setDataAttribut] = React.useState([])
-    const [dataBenefit, setDataBenefit] = React.useState([])
+    const [dataCompilator, setDataCompilator] = React.useState<dataCompilator[]>([])
+    const [dataAttribut, setDataAttribut] = React.useState<dataAtribut[]>([])
+    const [dataBenefit, setDataBenefit] = React.useState<dataGolongan[]>([])
     const fetchCommons = async () => {
 		try {
 			let response = await fetchGetAsset('kompilator');

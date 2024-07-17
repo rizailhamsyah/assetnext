@@ -4,7 +4,7 @@ import { UserAuthForm } from './components/user-auth-form'
 import ViteLogo from '@/assets/vite.svg'
 // import { useSession } from "next-auth/react"
 
-export default function Login(csrfToken={getCsrfToken}) {
+export default function Login() {
   // const { status: sessionStatus } = useSession();
   // if (sessionStatus === 'loading') {
   //   return <>Loading app...</>;
