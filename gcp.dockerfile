@@ -32,10 +32,8 @@ ENV TZ="Asia/Jakarta"
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/.env* ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/.next ./.next
+COPY --from=build /app ./
+
+EXPOSE 3000
 
 CMD [ "npm", "preview" ]
