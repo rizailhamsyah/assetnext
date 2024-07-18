@@ -39,4 +39,6 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/.next ./.next
 COPY --from=build /app ./
 
+RUN npm install -g vite
+
 CMD [ "npm", "run", "preview" ]
