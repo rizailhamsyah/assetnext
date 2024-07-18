@@ -31,6 +31,6 @@ export default defineConfig({
     }
   },
   preview: {
-    port: Number(process.env.PORT) || 3000,
+    port: 8080,
   },
 })
