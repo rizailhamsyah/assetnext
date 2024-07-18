@@ -4,6 +4,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
+COPY vite*.json ./
 COPY .env* ./
 RUN npm ci --legacy-peer-deps
 
@@ -16,6 +17,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
+COPY vite*.json ./
 COPY .env* ./
 COPY --from=development /app/node_modules ./node_modules
 COPY . .
@@ -33,6 +35,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY --from=build /app/package*.json ./
+COPY --from=build /app/vite*.json ./
 COPY --from=build /app/.env* ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
