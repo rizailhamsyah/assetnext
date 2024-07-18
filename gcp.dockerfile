@@ -20,8 +20,9 @@ COPY .env* ./
 COPY --from=development /app/node_modules ./node_modules
 COPY . .
 
-RUN npm ci --legacy-peer-deps --only=production && npm cache clean --force
 RUN npm run build
+
+RUN npm ci --legacy-peer-deps --only=production && npm cache clean --force
 
 FROM node:18-alpine AS production
 
