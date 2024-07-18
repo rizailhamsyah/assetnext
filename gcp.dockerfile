@@ -11,7 +11,6 @@ FROM node:18-alpine AS build
 
 ENV NODE_ENV production
 ENV TZ="Asia/Jakarta"
-ENV PORT=$PORT
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
@@ -29,7 +28,6 @@ FROM node:18-alpine AS production
 
 ENV NODE_ENV production
 ENV TZ="Asia/Jakarta"
-ENV PORT=$PORT
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
