@@ -17,9 +17,6 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['js-big-decimal']
   },
-  server: {
-    port: 3000,
-  },
   build: {
     minify: 'esbuild',
     emptyOutDir: true,
