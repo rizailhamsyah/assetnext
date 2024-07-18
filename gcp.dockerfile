@@ -39,4 +39,4 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
 COPY --from=build /app ./
 
-CMD [ "npm", "run", "preview" ]
+CMD [ "npm", "preview" ]
