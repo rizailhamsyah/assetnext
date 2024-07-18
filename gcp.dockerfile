@@ -25,6 +25,8 @@ RUN npm run build
 
 RUN npm ci --legacy-peer-deps --only=production && npm cache clean --force
 
+RUN npm run build --only=production
+
 FROM node:18-alpine AS production
 
 ENV NODE_ENV production
