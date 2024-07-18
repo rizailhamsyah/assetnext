@@ -5,7 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
 COPY .env* ./
-RUN npm ci --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 FROM node:18-alpine AS build
 
@@ -23,7 +23,7 @@ COPY . .
 
 RUN npm run build
 
-RUN npm ci --legacy-peer-deps --only=production && npm cache clean --force
+RUN npm install --legacy-peer-deps --only=production && npm cache clean --force
 
 FROM node:18-alpine AS production
 
@@ -40,7 +40,5 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/.next ./.next
 COPY --from=build /app ./
-
-RUN npm install -g vite
 
 CMD [ "npm", "run", "preview" ]
