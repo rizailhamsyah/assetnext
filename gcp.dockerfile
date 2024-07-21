@@ -41,7 +41,6 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/.next ./.next
 COPY --from=build /app ./
 
-RUN npm install -g vite --legacy-peer-deps
 RUN npm install vite --legacy-peer-deps
 RUN npm install -D @vitejs/plugin-react-swc --legacy-peer-deps
 RUN npm install vite-plugin-env-compatible --legacy-peer-deps
