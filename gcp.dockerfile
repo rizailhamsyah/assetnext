@@ -33,14 +33,15 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/vite.config.ts ./
-COPY --from=build /app/.env* ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/.next ./.next
+# COPY --from=build /app/package*.json ./
+# COPY --from=build /app/vite.config.ts ./
+# COPY --from=build /app/.env* ./
+# COPY --from=build /app/node_modules ./node_modules
+# COPY --from=build /app/dist ./dist
+# COPY --from=build /app/.next ./.next
 COPY --from=build /app ./
 
+RUN npm install -g vite --legacy-peer-deps
 RUN npm install vite --legacy-peer-deps
 RUN npm install -D @vitejs/plugin-react-swc --legacy-peer-deps
 RUN npm install vite-plugin-env-compatible --legacy-peer-deps
