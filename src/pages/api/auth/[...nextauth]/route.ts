@@ -3,7 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import querystring from 'querystring';
 import api from '@/service/api';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { callbackify } from 'util';
 
 export const authOptions = {
   providers: [

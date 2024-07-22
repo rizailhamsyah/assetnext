@@ -27,7 +27,7 @@ export default defineConfig({
         lessons: path.resolve(__dirname, 'src/pages/_app.tsx'),
         locations: path.resolve(__dirname, 'src/pages/_app.tsx'),
         schedule: path.resolve(__dirname, 'src/pages/_app.tsx'),
-        auth: path.resolve(__dirname, 'src/pages/api/auth/[...nextauth].ts')
+        auth: path.resolve(__dirname, 'src/pages/api/auth/[...nextauth]/route.ts')
       },
     }
   },
