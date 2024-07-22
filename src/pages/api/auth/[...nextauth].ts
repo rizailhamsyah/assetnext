@@ -1,20 +1,19 @@
-import NextAuth from 'next-auth'
-import Credential from 'next-auth/providers/credentials'
-import querystring from 'querystring'
-import api from '../../../service/api'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { JWT } from 'next-auth/jwt'
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import querystring from 'querystring';
+import api from '@/service/api';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { callbackify } from 'util';
 
 export const authOptions = {
   providers: [
-    Credential({
+    CredentialsProvider({
       name: 'Credentials',
       credentials: {
         username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials: any) => {
-        let fetch
         try {
           const request = await api.post(
             'login/',
@@ -23,9 +22,11 @@ export const authOptions = {
               password: credentials.password,
               application: 'digital-asset',
             }),
-          )
-          console.log("Request", request)
-          fetch = request.data
+          );
+
+          console.log('Request', request);
+          const fetch = request.data;
+
           if (fetch && fetch.user) {
             const user = {
               id: fetch.user.id,
@@ -34,51 +35,55 @@ export const authOptions = {
               email: fetch.user.email,
               name: fetch.user.name,
               role: fetch.roles,
-            }
-            console.log("User", user)
-            return user
+            };
+            console.log('User', user);
+            return user;
           } else {
-            console.log("Error")
-            return null
+            console.log('Error: No user found');
+            return null;
           }
         } catch (err: any) {
-          if (err.response) {
-            fetch = err.response.data
+          console.log('Error in authorize function', err);
+
+          if (err.response && err.response.data) {
+            console.error('API Error Response:', err.response.data);
+          } else {
+            console.error('Error:', err.message);
           }
-          console.log("Fatal Error")
-          return null
+
+          return null;
         }
       },
     }),
   ],
-  // callbacks: {
-  //   async signIn({ user, account, profile, email, credentials }: { user: any, account: any, profile: any, email: any, credentials: any }) {
-  //     return true
-  //   },
-  //   async jwt({ token, user }: { token: JWT, user: any }) {
-  //     if (user) {
-  //       token.id = user.id
-  //       token.username = user.username
-  //       token.pic = user.image
-  //       token.role = user.role
-  //     }
-  //     return token
-  //   },
-  //   async session({ session, token }: { session: any, token: JWT }) {
-  //     session.accessToken = token.accessToken
-  //     session.user.id = token.id
-  //     session.user.username = token.username
-  //     session.user.pic = token.pic
-  //     session.user.role = token.role
-  //     return session
-  //   },
-  // },
+  callback: {
+    async signIn({ user, account, profile, email, credentials }: { user: any; account: any; profile: any; email: any; credentials: any }) {
+      return true;
+    },
+    async jwt({ token, user }: { token: any; user: any }) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+        token.pic = user.image;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      session.accessToken = token.accessToken;
+      session.user.id = token.id;
+      session.user.username = token.username;
+      session.user.pic = token.pic;
+      session.user.role = token.role;
+      return session;
+    },
+  },
   pages: {
     signIn: '/sign-in',
   },
-  secret: process.env.AUTH_SECRET,
-}
+  secret: 'q4Xg+OFI5fJLajetnWK0WPB1l36vPEjkfDyF8RDEXu4=',
+};
 
-export default function authHandler(req: NextApiRequest, res: NextApiResponse) {
-  return NextAuth(req, res, authOptions)
-}
+// export default function authHandler(req: NextApiRequest, res: NextApiResponse) {
+  export default NextAuth(authOptions);
+// }
